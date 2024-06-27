@@ -103,18 +103,18 @@ class Result:
         :param test: A dict with test internal state
         """
         status = state.get("status")
-        status_mapping = {
-            "PASS": "passed",
-            "SKIP": "skipped",
-            "FAIL": "failed",
-            "WARN": "warned",
-            "INTERRUPTED": "interrupted",
-            "CANCEL": "cancelled",
-        }
-        if status in status_mapping:
-            setattr(
-                self, status_mapping[status], getattr(self, status_mapping[status]) + 1
-            )
+        if status == "PASS":
+            self.passed += 1
+        elif status == "SKIP":
+            self.skipped += 1
+        elif status == "FAIL":
+            self.failed += 1
+        elif status == "WARN":
+            self.warned += 1
+        elif status == "INTERRUPTED":
+            self.interrupted += 1
+        elif status == "CANCEL":
+            self.cancelled += 1
         else:
             self.errors += 1
         self.end_test(state)
